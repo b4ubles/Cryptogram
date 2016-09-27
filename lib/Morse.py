@@ -1,5 +1,6 @@
-#x = "XYYY YXXX XYXX XXY XYY X XYY YX YYXX"
-#s = ""
+from string import upper
+from string import uppercase
+
 EDICT = {'A': ".-", 'B': "-...", 'C': "-.-.", 'D': "-..", 'E': ".",
          'F': "..-.", 'G': "--.", 'H': "....", 'I': "..", 'J': ".---",
          'K': "-.-", 'L': ".-..", 'M': "--", 'N': "-.", 'O': "---",
@@ -14,19 +15,13 @@ DDICT = {'---': 'O', '--.': 'G', '-...': 'B', '-..-': 'X',
          '--': 'M', '-.': 'N', '....': 'H', '...-': 'V'}
 
 
-x = raw_input()
-x = x.split()
-re = ''
-'''
-for i in x:
-    if i == 'X':
-        s += '.'
-        continue
-    if i == 'Y':
-        s += '-'
-        continue
-    s += i
-'''
-for i in x:
-    re+=DDICT[i]
-print re
+def Morse_decode(x):
+    return ' '.join(map(lambda i: DDICT[i], x.split()))
+
+
+def Morse_encode(x):
+    return ' '.join(map(lambda i: EDICT[i], list(filter(lambda i: i in uppercase, upper(x)))))
+
+if __name__ == '__main__':
+    print Morse_encode('this is a test')
+    print Morse_decode('.. .-.. --- ...- . -.-- --- ..-')
