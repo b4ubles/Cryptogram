@@ -443,7 +443,7 @@ def ord4Prime(a, p):
         else:
             return p-1
     else:
-        print "error: wrong use, need p and (p-1)/2 is prime"
+        print "Error: wrong use, need p and (p-1)/2 is prime"
     return ord(a, p)
 
 

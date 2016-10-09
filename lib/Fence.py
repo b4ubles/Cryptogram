@@ -35,7 +35,7 @@ def fence_decrypt(s, t=0):
     return ret
 
 if __name__ == '__main__':
-    TESTCASE = "HLEICICTSTWOOCFEMCNAO"
+    TESTCASE = "ba1f2511fc30423bdb"
     s = TESTCASE
     for i in range(2, len(s)/2+2):
         x = fence_encrypt(s,t=i)

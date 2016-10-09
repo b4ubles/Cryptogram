@@ -1,5 +1,6 @@
 from cryptography import *
-from unit_test import TESTCASE
+from cry_test import TESTCASE
+
 
 class RSA():
 
@@ -10,7 +11,8 @@ class RSA():
     def __init__(self):
         pass
 
-    def genkey(self, a, b):
+    @staticmethod
+    def genkey(a, b):
         p = generatePrime(a, b)
         q = generatePrime(a, b)
         while q == p:
@@ -18,29 +20,33 @@ class RSA():
 
         n = p*q
         phi = (p-1)*(q-1)
-        e = self.gete(phi)
+        e = RSA.gete(phi)
         d = Euclidean(e, phi)[0] % phi
 
         return e, d, n
 
-    def gete(self, phi):
+    @staticmethod
+    def gete(phi):
         while True:
             e = randint(2, phi-1)
             if gcd(e, phi) == 1:
                 break
         return e
 
-    def getd(self, p, q, e):
+    @staticmethod
+    def getd(p, q, e):
         phi = (p-1)*(q-1)
         d = Euclidean(e, phi)[0] % phi
 
         return d
 
-    def encrypt(self, m, e, n):
+    @staticmethod
+    def encrypt(m, e, n):
         num = msg2num(m)
         return mrsm(num, e, n)
 
-    def decrypt(self, c, d, n):
+    @staticmethod
+    def decrypt(c, d, n):
         return num2msg(mrsm(c, d, n))
 
 
@@ -49,8 +55,7 @@ DEBUG = True
 
 def main():
 
-    rsa = RSA()
-    e, d, n = rsa.genkey(1 << 512, 1 << 514)
+    e, d, n = RSA.genkey(1 << 512, 1 << 514)
 
     # print d
 
@@ -76,13 +81,13 @@ def main():
 
     # encryption
     for m in msg_list:
-        cryptograph.append(rsa.encrypt(m, e, n))
+        cryptograph.append(RSA.encrypt(m, e, n))
 
     plaintext = []
 
     # decryption
     for c in cryptograph:
-        plaintext.append(rsa.decrypt(c, d, n))
+        plaintext.append(RSA.decrypt(c, d, n))
 
     re = ''
     for m in plaintext:

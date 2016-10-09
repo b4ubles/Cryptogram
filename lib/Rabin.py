@@ -1,18 +1,20 @@
 from cryptography import *
-from unit_test import TESTCASE
+from cry_test import TESTCASE
 
 
 class Rabin():
 
     """docstring for Rabin"""
 
+    STRLEN = 100
+
     def __init__(self):
-        self.FLAG = 100
+        pass
         #super(Rabin, self).__init__()
         #self.arg = arg
 
-    # change a little to make it fit rabin
-    def genkey(self, a, b):
+    @staticmethod
+    def genkey(a, b):
         while True:
             # print "try p \t"
             p = randint(a, b)
@@ -31,26 +33,29 @@ class Rabin():
 
         return p, q
 
-    def encrypt(self, m, n):
-        return ((msg2num(m)*self.FLAG)**2) % n
+    @staticmethod
+    def encrypt(m, n):
+        return ((msg2num(m)*Rabin.STRLEN)**2) % n
 
-    def decrypt(self, i, p, q):
-        re = self.sqrt(i, p, q)
+    @staticmethod
+    def decrypt(i, p, q):
+        re = Rabin.sqrt(i, p, q)
         for i in re:
-            if i % self.FLAG == 0:
-                return num2msg(i/self.FLAG)
+            if i % Rabin.STRLEN == 0:
+                return num2msg(i/Rabin.STRLEN)
                 # plaintext.append(j)
 
-    def sqrt(self, c, p, q):
+    @staticmethod
+    def sqrt(c, p, q):
         x = squareRootModp4(c, p)
         y = squareRootModp4(c, q)
         s, t = Euclidean(q, p)
         '''
-		if s*q + q*t == 1:
-			print "True"
-		else:
-			print "False"
-		'''
+        if s*q + q*t == 1:
+            print "True"
+        else:
+            print "False"
+        '''
         n = p*q
         re = []
         re.append((x*s*q+y*t*p) % (n))
@@ -66,8 +71,7 @@ DEBUG = True
 
 def main():
 
-    rabin = Rabin()
-    p, q = rabin.genkey(1 << 512, 1 << 514)
+    p, q = Rabin.genkey(1 << 512, 1 << 514)
     n = p*q
     # public key : n
     # private key : (p, q)
@@ -97,13 +101,13 @@ def main():
 
     # encryption
     for m in msg_list:
-        cryptograph.append(rabin.encrypt(m, n))
+        cryptograph.append(Rabin.encrypt(m, n))
 
     plaintext = []
 
     # decryption
     for i in cryptograph:
-        plaintext.append(rabin.decrypt(i, p, q))
+        plaintext.append(Rabin.decrypt(i, p, q))
 
     re = ''
     for m in plaintext:
