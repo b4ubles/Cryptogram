@@ -71,10 +71,6 @@ def reFano(p, ret):
     return reFano(p[:i], ret[:i]) + reFano(p[i:], ret[i:])
 
 
-def Huffman():
-    pass
-
-
 def main():
     # print Shanon([0.05, 0.25, 0.10, 0.15, 0.20, 0.25])
     # print dec_to_bin(0.5, 3.0)

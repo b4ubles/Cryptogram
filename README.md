@@ -17,3 +17,9 @@ number theory include:
 
 * polynomial calc
 * continued fraction calc
+
+information theory include:
+
+* Shanon coding
+* Fano coding
+* Huffman coding
