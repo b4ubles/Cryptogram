@@ -1,5 +1,12 @@
 from cry_test import TESTCASE
 
+# mode refer to 128bits, 192bits, 256bits
+# Nk = 8, Nr = 14 here
+# Nb Number of columns (32-bit words) comprising the State. 
+# For this standard, Nb = 4.
+mode = 256
+Nk = mode / 32
+Nr = Nk + 6
 Nb = 4
 
 s_box = [
@@ -56,15 +63,7 @@ in_256 = [
     0xcc, 0xdd, 0xee, 0xff]
 
 
-def key_expansion(key):
-
-    # len(key) should in [16, 24, 32]
-    # refer to 128bit, 192bit, 256bit
-    # Nk = 8, Nr = 14
-    Nk = len(key) / 4
-    Nr = Nk + 6
-
-    w = key + [0 for i in range(Nk*4, (Nr+1)*4*4)]
+def key_expansion(w):
 
     for i in range(Nk, 4*(Nr+1)):
         tmp = [w[4*(i-1)+k] for k in range(4)]
@@ -75,8 +74,7 @@ def key_expansion(key):
         elif Nk > 6 and i % Nk == 4:
             sub_word(tmp)
 
-        for k in range(4):
-            w[4*i+k] = w[4*(i-Nk)+k] ^ tmp[k]
+        w += [ ( w[4*(i-Nk)+k] ^ tmp[k] ) for k in range(4)]
 
     return w
 
