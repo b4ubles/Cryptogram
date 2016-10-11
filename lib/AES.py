@@ -1,7 +1,8 @@
-from unit_test import TESTCASE
+from cry_test import TESTCASE
 
+Nb = 4
 
-sbox = [
+s_box = [
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
     0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
     0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15,
@@ -54,73 +55,102 @@ in_256 = [
     0x88, 0x99, 0xaa, 0xbb,
     0xcc, 0xdd, 0xee, 0xff]
 
-class AES():
 
-    """
-    a simple calss which use to encrypt and decrypt by AES
-    """
+def key_expansion(key):
 
-    def __init__(self):
-        pass
+    # len(key) should in [16, 24, 32]
+    # refer to 128bit, 192bit, 256bit
+    # Nk = 8, Nr = 14
+    Nk = len(key) / 4
+    Nr = Nk + 6
 
-    @staticmethod
-    def key_expansion(key):
+    w = key + [0 for i in range(Nk*4, (Nr+1)*4*4)]
 
-        Nk = len(key) / 4
-        Nr = Nk + 6
+    for i in range(Nk, 4*(Nr+1)):
+        tmp = [w[4*(i-1)+k] for k in range(4)]
 
-        w = []
+        if i % Nk == 0:
+            tmp = sub_word(rot_word(tmp))
+            tmp = coef_add(tmp, Rcon(i/Nk))
+        elif Nk > 6 and i % Nk == 4:
+            sub_word(tmp)
 
-        for i in range(NK):
-            w[4*i+0] = key[4*i+0]
-            w[4*i+1] = key[4*i+1]
-            w[4*i+2] = key[4*i+2]
-            w[4*i+3] = key[4*i+3]
+        for k in range(4):
+            w[4*i+k] = w[4*(i-Nk)+k] ^ tmp[k]
 
-        for (i = Nk i < len i++) {
-            tmp[0] = w[4*(i-1)+0]
-            tmp[1] = w[4*(i-1)+1]
-            tmp[2] = w[4*(i-1)+2]
-            tmp[3] = w[4*(i-1)+3]
+    return w
 
-            if (i%Nk == 0) {
 
-                rot_word(tmp)
-                sub_word(tmp)
-                coef_add(tmp, Rcon(i/Nk), tmp)
+def rot_word(w):
+    return w[1:] + w[:1]
 
-            } else if (Nk > 6 && i%Nk == 4) {
 
-                sub_word(tmp)
+def sub_word(w):
+    for i in range(4):
+        w[i] = s_box[w[i]]
+    return w
 
-            }
 
-            w[4*i+0] = w[4*(i-Nk)+0]^tmp[0]
-            w[4*i+1] = w[4*(i-Nk)+1]^tmp[1]
-            w[4*i+2] = w[4*(i-Nk)+2]^tmp[2]
-            w[4*i+3] = w[4*(i-Nk)+3]^tmp[3]
+def coef_add(a, b):
+    for i in range(4):
+        a[i] ^= b[i]
+    return a
 
-    @staticmethod
-    def encrypt(m):
-        return m
+def Rcon(i):
+    R = [0x02, 0x00, 0x00, 0x00]
+    if i == 1:
+        R[0] = 0x01  # x^(1-1) = x^0 = 1
+    elif i > 1:
+        R[0] = 0x02
+        i -= 1
+        while i-1 > 0:
+            R[0] = gmult(R[0], 0x02)
+            i -= 1
+    R[0] %= 256
+    return R
 
-    @staticmethod
-    def decrypt(c):
-        return c
+
+def gmult(a, b):
+
+    p = 0
+    i = 0
+    hbs = 0
+
+    for i in range(8):
+        if b & 1:
+            p ^= a
+
+        hbs = a & 0x80
+        a <<= 1
+        if (hbs):
+            a ^= 0x1b  # 0000 0001 0001 1011
+        b >>= 1
+
+    return p
+
+
+def encrypt(m):
+    return m
+
+
+def decrypt(c):
+    return c
 
 DEBUG = True
 
 
 def main():
 
+    print key_expansion(key_256)
+
     if DEBUG:
         plaintext = TESTCASE
     else:
         plaintext = raw_input()
 
-    cryptograph = AES.encrypt(plaintext)
+    cryptograph = encrypt(plaintext)
 
-    re = AES.decrypt(cryptograph)
+    re = decrypt(cryptograph)
 
     if DEBUG:
         print cryptograph
