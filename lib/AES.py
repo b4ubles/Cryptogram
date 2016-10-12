@@ -135,10 +135,21 @@ def sub_bytes(s):
     return map(lambda i: s_box[i], s)
 
 
+def inv_sub_bytes(s):
+    return map(lambda i: inv_sbox[i], s)
+
+
 def shift_rows(state):
     for i in range(1, 4):
         state[Nb*i: Nb*(i+1)] = state[Nb*i + i: Nb*(i+1)] + \
             state[Nb*i: Nb*i + i]
+    return state
+
+
+def inv_shift_rows(state):
+    for i in range(1, 4):
+        state[Nb*i: Nb*(i+1)] = state[Nb*i + 4-i: Nb*(i+1)] + \
+            state[Nb*i: Nb*i + 4-i]
     return state
 
 
@@ -159,15 +170,38 @@ def mix_columns(state):
 
     return state
 
-def coef_mult(a, b, d) :
-    d[0] = gmult(a[0],b[0])^gmult(a[3],b[1])^gmult(a[2],b[2])^gmult(a[1],b[3]);
-    d[1] = gmult(a[1],b[0])^gmult(a[0],b[1])^gmult(a[3],b[2])^gmult(a[2],b[3]);
-    d[2] = gmult(a[2],b[0])^gmult(a[1],b[1])^gmult(a[0],b[2])^gmult(a[3],b[3]);
-    d[3] = gmult(a[3],b[0])^gmult(a[2],b[1])^gmult(a[1],b[2])^gmult(a[0],b[3]);
+
+def inv_mix_columns(state):
+
+    a = bytearray([0x0e, 0x09, 0x0d, 0x0b])
+    col = bytearray(4)
+    res = bytearray(4)
+
+    for j in range(Nb):
+        for i in range(4):
+            col[i] = state[Nb*i+j]
+
+        res = coef_mult(a, col, res)
+
+        for i in range(4):
+            state[Nb*i+j] = res[i]
+
+    return state
+
+
+def coef_mult(a, b, d):
+    d[0] = gmult(a[0], b[0]) ^ gmult(a[3], b[1]) ^ gmult(
+        a[2], b[2]) ^ gmult(a[1], b[3])
+    d[1] = gmult(a[1], b[0]) ^ gmult(a[0], b[1]) ^ gmult(
+        a[3], b[2]) ^ gmult(a[2], b[3])
+    d[2] = gmult(a[2], b[0]) ^ gmult(a[1], b[1]) ^ gmult(
+        a[0], b[2]) ^ gmult(a[3], b[3])
+    d[3] = gmult(a[3], b[0]) ^ gmult(a[2], b[1]) ^ gmult(
+        a[1], b[2]) ^ gmult(a[0], b[3])
     return d
 
-def encrypt(m, w):
 
+def encrypt(m, w):
     m = bytearray(m)
     state = bytearray(4*Nb)
 
@@ -184,35 +218,76 @@ def encrypt(m, w):
 
     for i in range(4):
         for j in range(Nb):
-            m[i+4*j] = state[Nb*i+j];
-
+            m[i+4*j] = state[Nb*i+j]
     return m
 
 
-def decrypt(c):
+def decrypt(c, w):
+
+    state = bytearray(4*Nb)
+
+    for i in range(4):
+        for j in range(Nb):
+            state[Nb*i+j] = c[i+4*j]
+
+    state = add_round_key(state, w, Nr)
+
+    for r in range(Nr-1, 0, -1):
+        state = inv_mix_columns(
+            add_round_key(inv_sub_bytes(inv_shift_rows(state)), w, r))
+
+    state = add_round_key(inv_sub_bytes(inv_shift_rows(state)), w, 0)
+
+    for i in range(4):
+        for j in range(Nb):
+            c[i+4*j] = state[Nb*i+j]
+
     return c
+
 
 def byteprint(b):
     for i in b:
-        print i,
+        print hex(i),
     print
 
-DEBUG = True
 
+def genKey(x):
+    x = sha256(x)
+    return bytearray([int(x[i*2:i*2+2], 16) for i in range(len(x)/2)])
+
+
+def sha256(s):
+    return __import__('hashlib').sha256(str(s)).hexdigest()
+
+DEBUG = False
+
+class AES:
+    """docstring for AES"""
+    def __init__(self, key):
+        self.key = key_expansion(genKey(key))
+
+    def encrypt(self, m):
+        return encrypt(m, self.key)
+
+    def decrypt(self, c):
+        return decrypt(c, self.key)      
 
 def main():
 
-    x = key_expansion(key_256)
-    '''
+
     if DEBUG:
-        plaintext = TESTCASE
-    else:
+        aes = AES(raw_input('your key: '))
         plaintext = raw_input()
-    '''
-    cryptograph = encrypt(in_256, x)
+    else:
+        aes = AES('This is a secret key, 23333')
+        plaintext = TESTCASE
+
+    cryptograph = aes.encrypt(in_256)
     byteprint(cryptograph)
+    re = aes.decrypt(cryptograph)
+    byteprint(re)
+
     '''
-    re = decrypt(cryptograph)
 
     if DEBUG:
         print cryptograph
