@@ -202,7 +202,6 @@ def coef_mult(a, b, d):
 
 
 def encrypt(m, w):
-    m = bytearray(m)
     state = bytearray(4*Nb)
 
     for i in range(4):
@@ -246,9 +245,10 @@ def decrypt(c, w):
 
 
 def byteprint(b):
+    s = ''
     for i in b:
-        print hex(i),
-    print
+        s += hex(i)[2:]
+    print s
 
 
 def genKey(x):
@@ -259,6 +259,7 @@ def genKey(x):
 def sha256(s):
     return __import__('hashlib').sha256(str(s)).hexdigest()
 
+# DEBUG = True
 DEBUG = False
 
 class AES:
@@ -266,37 +267,38 @@ class AES:
     def __init__(self, key):
         self.key = key_expansion(genKey(key))
 
-    def encrypt(self, m):
-        return encrypt(m, self.key)
+    def encrypt(self, plain):
+        e = bytearray()
+        plain += '\x00' * (32 - (len(plain) % 32))
+        plain = bytearray(plain)
+        for i in range(len(plain)/32):
+            e += (encrypt(plain[i*32:(i+1)*32], self.key))
+        return e
 
     def decrypt(self, c):
-        return decrypt(c, self.key)      
+        d = bytearray()
+        for i in range(len(c)/32):
+            d += (decrypt(c[i*32:(i+1)*32], self.key))
+        return str(d).strip('\x00')
 
 def main():
 
-
     if DEBUG:
         aes = AES(raw_input('your key: '))
-        plaintext = raw_input()
+        plain = raw_input('your plain: ')
     else:
         aes = AES('This is a secret key, 23333')
-        plaintext = TESTCASE
+        plain = TESTCASE
 
-    cryptograph = aes.encrypt(in_256)
-    byteprint(cryptograph)
+    cryptograph = aes.encrypt(plain)
     re = aes.decrypt(cryptograph)
-    byteprint(re)
 
-    '''
+    if not DEBUG:
+        print 'plain: ',plain
+        print 'cry: ', cryptograph
 
-    if DEBUG:
-        print cryptograph
-        print plaintext
-        print re
-
-    if plaintext == re:
+    if plain == re:
         print "You did it!"
-    '''
 
 if __name__ == '__main__':
     main()
