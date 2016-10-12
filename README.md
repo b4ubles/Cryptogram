@@ -5,6 +5,7 @@ a cryptogram lib, implemented some simple cryptogram algorithms
 
 cipher algorithms include:
 
+* AES
 * Bacon's cipher
 * Caesar Cipher
 * Morse code
