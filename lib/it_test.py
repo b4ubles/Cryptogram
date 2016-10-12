@@ -7,7 +7,7 @@ from information_theory import *
 from Huffman import *
 
 
-class CryptTest(unittest.TestCase):
+class InformationTheoryTest(unittest.TestCase):
 
     def test_entropy(self):
         self.assertEqual(entropy([0.5, 0.5]), 1)

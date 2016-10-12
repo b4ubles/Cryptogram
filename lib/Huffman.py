@@ -70,5 +70,10 @@ def main():
 
     print Huffman(code).encode
 
+    code = {'a': 0.4, 'c': 0.2, 'b': 0.2, 'e': 0.1, 'd': 0.1}
+
+    print Huffman(code).encode
+
+
 if __name__ == '__main__':
     main()
