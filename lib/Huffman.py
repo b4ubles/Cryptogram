@@ -60,20 +60,10 @@ class Huffman:
 
 
 def main():
-    code = {'a': 0.01, 'b': 0.1, 'c': 0.15,
-            'd': 0.17, 'e': 0.18, 'f': 0.19, 'g': 0.2}
+    code = {'a': 0.32, 'b': 0.22, 'c': 0.18,
+            'd': 0.16, 'e': 0.08, 'f': 0.04}
 
     print Huffman(code).encode
-
-    code = {'a': 0.4, 'c': 0.1, 'b': 0.18, 'e': 0.07,
-             'd': 0.1, 'g': 0.05, 'f': 0.06, 'h': 0.04}
-
-    print Huffman(code).encode
-
-    code = {'a': 0.4, 'c': 0.2, 'b': 0.2, 'e': 0.1, 'd': 0.1}
-
-    print Huffman(code).encode
-
 
 if __name__ == '__main__':
     main()

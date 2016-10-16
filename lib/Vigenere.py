@@ -22,14 +22,7 @@ def Vigenere(m, key, d=''):
     return re
 
 if __name__ == '__main__':
-    m = 'ISCCCOMPETITION'
-    x = 'WHOSYOURDADDY'
-    y = 'QWERTYU'
-    d = 'QAZWSXEDCRFVTGBYHNUJMIKOLP'
-    print Vigenere(m, [x], d)
-    print Vigenere(m, [y], d)
-    print Vigenere(m, [x, y], d)
-    print Vigenere(m, [x[::-1], y], d)
-    print Vigenere(m, [x, y[::-1]], d)
-    print Vigenere(m, [x[::-1], y[::-1]], d)
-    print Vigenere(m, [y, x, d], d)
+    x = 'xpfzxkaqfcrnxlivykaiiy'
+    # y = 'heded'
+    y = 'skycloud'
+    print Vigenere(x, [y])

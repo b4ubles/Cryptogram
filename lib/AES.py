@@ -45,23 +45,6 @@ inv_sbox = bytearray([
     0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61,
     0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d])
 
-# 256 bit key
-key_256 = bytearray([
-    0x00, 0x01, 0x02, 0x03,
-    0x04, 0x05, 0x06, 0x07,
-    0x08, 0x09, 0x0a, 0x0b,
-    0x0c, 0x0d, 0x0e, 0x0f,
-    0x10, 0x11, 0x12, 0x13,
-    0x14, 0x15, 0x16, 0x17,
-    0x18, 0x19, 0x1a, 0x1b,
-    0x1c, 0x1d, 0x1e, 0x1f])
-
-in_256 = bytearray([
-    0x00, 0x11, 0x22, 0x33,
-    0x44, 0x55, 0x66, 0x77,
-    0x88, 0x99, 0xaa, 0xbb,
-    0xcc, 0xdd, 0xee, 0xff])
-
 
 def key_expansion(w):
 
@@ -99,7 +82,6 @@ def Rcon(i):
         while i-1 > 0:
             R[0] = gmult(R[0], 0x02)
             i -= 1
-    R[0] %= 256
     return R
 
 
@@ -154,7 +136,7 @@ def inv_shift_rows(state):
 
 
 def mix_columns(state):
-
+    # matrix multiply
     a = bytearray([0x02, 0x01, 0x01, 0x03])
     col = bytearray(4)
     res = bytearray(4)
@@ -259,13 +241,14 @@ def genKey(x):
 def sha256(s):
     return __import__('hashlib').sha256(str(s)).hexdigest()
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 class AES:
     """docstring for AES"""
-    def __init__(self, key):
+    def __init__(self, key, mode = 32):
         self.key = key_expansion(genKey(key))
+        self.mode = mode
 
     def encrypt(self, plain):
         e = bytearray()
@@ -279,7 +262,7 @@ class AES:
         d = bytearray()
         for i in range(len(c)/32):
             d += (decrypt(c[i*32:(i+1)*32], self.key))
-        return str(d).strip('\x00')
+        return str(d).rstrip('\x00')
 
 def main():
 
@@ -293,7 +276,7 @@ def main():
     cryptograph = aes.encrypt(plain)
     re = aes.decrypt(cryptograph)
 
-    if not DEBUG:
+    if DEBUG:
         print 'plain: ',plain
         print 'cry: ', cryptograph
 

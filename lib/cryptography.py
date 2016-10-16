@@ -90,7 +90,7 @@ def euler(x):
 
 
 def euler_v2(x):
-    '''another version of euler function'''
+    '''sencond version of euler function'''
 
     l = primeFactor(x, True)
 
@@ -103,7 +103,7 @@ def euler_v2(x):
 
 def euler_v3(n):
     '''
-    another version of euler
+    third version of euler
     if need calc many numbers' euler
     this function could be useful
     '''
@@ -135,7 +135,7 @@ def euler_v3(n):
 
 def Eratoshenes(n):
     '''
-    need many memory
+    this function need many memory
     use Eratoshenes to generate prime list
     '''
     composite = set()
@@ -483,6 +483,11 @@ def primeFactor(x, dinstinct=False):
         prime += 2
 
     return sorted(list(set(factor))) if dinstinct else factor
+
+
+def reduced_residues(n):
+    # return reduced residues system
+    return filter(lambda i: gcd(i, n) == 1, range(1, n))
 
 
 def squareRootModp(a, p):
