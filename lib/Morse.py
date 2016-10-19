@@ -15,13 +15,13 @@ DDICT = {'---': 'O', '--.': 'G', '-...': 'B', '-..-': 'X',
          '--': 'M', '-.': 'N', '....': 'H', '...-': 'V'}
 
 
-def Morse_decode(x):
+def morse_decode(x):
     return ' '.join(map(lambda i: DDICT[i], x.split()))
 
 
-def Morse_encode(x):
+def morse_encode(x):
     return ' '.join(map(lambda i: EDICT[i], list(filter(lambda i: i in uppercase, upper(x)))))
 
 if __name__ == '__main__':
-    print Morse_encode('this is a test')
-    print Morse_decode('.. .-.. --- ...- . -.-- --- ..-')
+    print morse_encode('this is a test')
+    print morse_decode('.. .-.. --- ...- . -.-- --- ..-')
