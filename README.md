@@ -4,7 +4,7 @@ a cryptogram lib, implemented some simple cryptogram algorithms
 
 ---
 
-cipher algorithms include:
+### cipher algorithms
 
 * AES
 * Bacon's cipher
@@ -17,7 +17,7 @@ cipher algorithms include:
 
 ---
 
-number theory include:
+### number theory
 
 * chinese remainder theorem
 * congruence calc
@@ -36,7 +36,7 @@ number theory include:
 
 ---
 
-information theory include:
+### information theory
 
 * Shanon coding
 * Fano coding
