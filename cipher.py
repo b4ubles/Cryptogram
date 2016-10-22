@@ -18,7 +18,10 @@ def console_print():
 def main():
     console_print()
     while True:
-        print '>>>', input()
-
+        try:
+            print '>>>', input()
+        except Exception , e:
+            print e
+            
 if __name__ == '__main__':
     main()
