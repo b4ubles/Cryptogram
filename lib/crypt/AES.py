@@ -207,8 +207,8 @@ def genKey(x):
 def sha256(s):
     return __import__('hashlib').sha256(str(s)).hexdigest()
 
-DEBUG = True
-# DEBUG = False
+__DEBUG = True
+# __DEBUG = False
 
 
 class AES:
@@ -241,7 +241,7 @@ class AES:
 
 def main():
 
-    if DEBUG:
+    if __DEBUG:
         aes = AES(raw_input('your key: '))
         plain = raw_input('your plain: ')
     else:
@@ -251,7 +251,7 @@ def main():
     cryptograph = aes.encrypt(plain)
     re = aes.decrypt(cryptograph)
 
-    if DEBUG:
+    if __DEBUG:
         print 'plain: ', plain
         print 'cry: ', cryptograph
 
