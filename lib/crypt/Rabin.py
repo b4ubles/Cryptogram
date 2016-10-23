@@ -4,7 +4,11 @@ from cry_test import TESTCASE
 
 class Rabin():
 
-    """docstring for Rabin"""
+    """
+    a simple calss which use to encrypt and decrypt by Rabin
+    public key: b, n
+    private key: p, q
+    """
 
     STRLEN = 100
 
@@ -50,12 +54,14 @@ class Rabin():
         x = squareRootModp4(c, p)
         y = squareRootModp4(c, q)
         s, t = Euclidean(q, p)
+
         '''
         if s*q + q*t == 1:
             print "True"
         else:
             print "False"
         '''
+        
         n = p*q
         re = []
         re.append((x*s*q+y*t*p) % (n))

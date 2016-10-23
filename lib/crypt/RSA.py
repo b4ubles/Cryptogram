@@ -6,6 +6,8 @@ class RSA():
 
     """
     a simple calss which use to encrypt and decrypt by RSA
+    public key: e, n
+    private key: d
     """
 
     def __init__(self):

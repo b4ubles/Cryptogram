@@ -9,7 +9,9 @@ a cryptogram lib, implemented some simple cryptogram algorithms
 * AES
 * Bacon's Cipher
 * Caesar Cipher
+* Diffie-Hellman key exchange
 * Morse code
+* RC4
 * RSA
 * Rabin
 * The Rail-Fence Cipher
