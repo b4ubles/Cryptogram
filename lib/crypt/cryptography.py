@@ -425,9 +425,11 @@ def ordam(a, m):
     calc ord
     a ^ ordam(a,m) == 1
     '''
-    for i in range(1, m):
+    i = 1
+    while i < m:
         if mrsm(a, i, m) == 1:
             return i
+        i += 1
     return 0
 
 
@@ -444,20 +446,44 @@ def ord4Prime(a, p):
             return p-1
     else:
         print "Error: wrong use, need p and (p-1)/2 is prime"
-    return ord(a, p)
+
+    return ordam(a, p)
 
 
 def primitiveRoot(x):
     '''
+    return one primitive root of x
+    if x >> long int
+    can't use range
+    '''
+    phi = euler(x)
+
+    i = 2
+
+    while i < x:
+        if ordam(i, x) == phi:
+            return i
+        i += 1
+
+    return 0
+
+def primitiveRootRand4Prime(p):
+    '''
+    return a rand primitive root of prime p
+    '''
+    g = p - 1
+    while True:
+        d = randint(1, g)
+        if gcd(d, g) == 1:
+            return mrsm(g, d, p)
+
+
+def primitiveRootList(x):
+    '''
     return primitive root list of x
     '''
     phi = euler(x)
-    g = 0
-
-    for i in range(2, x):
-        if ordam(i, x) == phi:
-            g = i
-            break
+    g = primitiveRoot(x)
 
     return [] if g == 0 else sorted(
         map(lambda i: mrsm(g, i, x),

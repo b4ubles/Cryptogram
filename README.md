@@ -7,7 +7,7 @@ a cryptogram lib, implemented some simple cryptogram algorithms
 ### cipher algorithms
 
 * AES
-* Bacon's cipher
+* Bacon's Cipher
 * Caesar Cipher
 * Morse code
 * RSA

@@ -1,11 +1,11 @@
-from lib.Bacon import Bacon
-from lib.Caesar import caesar
-from lib.Morse import morse_encode, morse_decode
-from lib.Fence import fence_encrypt, fence_decrypt
-from lib.Vigenere import Vigenere
-from lib.RSA import RSA
-from lib.AES import AES
-from lib.Rabin import Rabin
+from lib.encode.Bacon import Bacon
+from lib.encode.Caesar import caesar
+from lib.encode.Morse import morse_encode, morse_decode
+from lib.encode.Fence import fence_encrypt, fence_decrypt
+from lib.encode.Vigenere import Vigenere
+from lib.crypt.RSA import RSA
+from lib.crypt.AES import AES
+from lib.crypt.Rabin import Rabin
 
 
 def console_print():
