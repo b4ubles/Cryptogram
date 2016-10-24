@@ -61,7 +61,7 @@ class Rabin():
         else:
             print "False"
         '''
-        
+
         n = p*q
         re = []
         re.append((x*s*q+y*t*p) % (n))
@@ -70,9 +70,8 @@ class Rabin():
         re.append((-x*s*q-y*t*p) % (n))
         return re
 
-# if DEBUG == True , will print some information
-DEBUG = True
-#DEBUG = False
+__DEBUG = True
+# __DEBUG = False
 
 
 def main():
@@ -86,7 +85,7 @@ def main():
         print "error!"
         return
 
-    if DEBUG:
+    if __DEBUG:
         msg = TESTCASE
     else:
         msg = raw_input()
@@ -119,7 +118,7 @@ def main():
     for m in plaintext:
         re += str(m)
 
-    if DEBUG:
+    if __DEBUG:
         print msg_list
         print cryptograph
         print "plain", plaintext
