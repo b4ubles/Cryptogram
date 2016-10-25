@@ -10,6 +10,7 @@ a cryptogram lib, implemented some simple cryptogram algorithms
 * Bacon's Cipher
 * Caesar Cipher
 * Diffie-Hellman key exchange
+* ElGamal
 * Morse code
 * RC4
 * RSA
