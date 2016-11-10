@@ -1,3 +1,41 @@
+from cryptography import euler
+
+
+class X:
+
+    def __init__(self, coe, index):
+        self.index = index
+        self.coe = coe
+
+    def __neg__(self):
+        return X(-self.coe, self.index)
+
+    def __str__(self):
+        coe = self.coe
+        index = self.index
+
+        if coe > 1:
+            s = ("+"+str(coe)+"x"+['^'+str(index), ''][index == 1])
+        elif coe == 1:
+            s = ("+x"+['^'+str(index), ''][index == 1])
+        elif coe == -1:
+            s = ("-x"+['^'+str(index), ''][index == 1])
+        elif coe == 0:
+            s = ''
+        else:
+            s = (str(coe)+"x"+['^'+str(index), ''][index == 1])
+
+        return s
+
+    def __add__(self, other):
+        return X(self.coe + other.coe, self.index)
+
+    def __sub__(self, other):
+        return X(self.coe - other.coe, self.index)
+
+    def __mul__(self, other):
+        return X(self.coe * other.coe, self.index * other.index)
+
 class Polynomial:
 
     '''
@@ -9,23 +47,8 @@ class Polynomial:
     f(x) = 3x^2 + 2x
     '''
 
-    def __init__(self, factor):
-
-        if isinstance(factor, list):
-            for i in factor:
-                if isinstance(i, list) and len(i) == 2 \
-                        and isinstance(i[0], int) and isinstance(i[1], int):
-                    pass
-                else:
-                    print "wrong init arugment"
-                    factor = [[0, 0]]
-                    break
-        else:
-            print "wrong init arugment"
-            factor = [[0, 0]]
-
-        factor.sort()
-        self.factor = factor
+    def __init__(self, factor=[X(0, 0)]):
+        self.factor = sorted(factor, cmp=lambda x, y: x.index < y.index)
 
     def __add__(self, other):
         add = []
@@ -35,28 +58,26 @@ class Polynomial:
             x = self.factor[i]
             y = other.factor[j]
 
-            if x[0] > y[0]:
+            # print x,y
+
+            if x.index > y.index:
                 add.append(y)
                 j += 1
-            elif x[0] < y[0]:
+            elif x.index < y.index:
                 add.append(x)
                 i += 1
-            elif x[0] == y[0]:
-                if x[1]+y[1] != 0:
-                    add.append([x[0], x[1]+y[1]])
+            elif x.index == y.index:
+                if x.coe+y.coe != 0:
+                    add.append(x+y)
                 i += 1
                 j += 1
 
             if i == len(self.factor):
-                while j != len(other.factor):
-                    add.append(other.factor[j])
-                    j += 1
+                add += other.factor[j:]
                 break
 
             if j == len(other.factor):
-                while i != len(self.factor):
-                    add.append(self.factor[i])
-                    i += 1
+                add += self.factor[i:]
                 break
 
         return Polynomial(add)
@@ -69,28 +90,24 @@ class Polynomial:
             x = self.factor[i]
             y = other.factor[j]
 
-            if x[0] > y[0]:
-                sub.append([y[0], -y[1]])
+            if x.index > y.index:
+                sub.append(-y)
                 j += 1
-            elif x[0] < y[0]:
+            elif x.index < y.index:
                 sub.append(x)
                 i += 1
-            elif x[0] == y[0]:
-                if x[1]-y[1] != 0:
-                    sub.append([x[0], x[1]-y[1]])
+            elif x.index == y.index:
+                if x.coe-y.coe != 0:
+                    sub.append(x-y)
                 i += 1
                 j += 1
 
-            if i == len(self.factor):
-                while j != len(other.factor):
-                    sub.append(other.factor[j])
-                    j += 1
+            if i >= len(self.factor):
+                sub += map(lambda k: -k, other.factor[j:])
                 break
 
-            if j == len(other.factor):
-                while i != len(self.factor):
-                    sub.append(self.factor[i])
-                    i += 1
+            if j >= len(other.factor):
+                sub += self.factor[i:]
                 break
 
         return Polynomial(sub)
@@ -99,54 +116,33 @@ class Polynomial:
         x = []
         for i in self.factor:
             for j in other.factor:
-                x.append([i[0]+j[0], i[1]*j[1]])
+                x.append(i * j)
         re = Polynomial(x)
         re.merge()
         return re
 
-    def pow(self):
-        return self.factor[-1][1]
+    def __div__(self, other):
+        # not finish
+        return [X(0, 0)]
 
-    def gcd(self, x, y):
-        if x < y:
-            x, y = y, x
-        while x % y != 0:
-            x %= y
-            x, y = y, x
-        return y
-
-    # bad version, need change
-    def getfai(self, x):
-        i = 1
-        fai = 0
-        while i != x:
-            if self.gcd(i, x) == 1:
-                fai += 1
-            i += 1
-        return fai
+    def __neg__(self):
+        return Polynomial() - Polynomial(self.factor)
 
     def __str__(self):
-        s = ''
-        for i in self.factor[::-1]:
-            if i[1] > 0:
-                s += ("+"+str(i[1])+"x^"+str(i[0]))
-            elif i[1] == 0:
-                pass
-            else:
-                s += (str(i[1])+"x^"+str(i[0]))
-        return s
+        s = ''.join(map(str, self.factor[::-1]))
+        return s[s[0] == '+':]
 
     def cal(self, x):
         result = 0
         for i in self.factor:
-            result += i[1]*(x**i[0])
+            result += i.coe*(x**i.index)
         return result
 
     def simplify(self, x):
-        fai = self.getfai(x)
+        fai = euler(x)
         for i in self.factor:
-            i[1] = i[1] % x
-            i[0] = i[0] % fai
+            i.coe = i.coe % x
+            i.index = i.index % fai
         self.factor.sort()
         self.merge()
 
@@ -158,27 +154,27 @@ class Polynomial:
                 x.append(i)
                 j += 1
                 continue
-            if x[j][0] == i[0]:
-                x[j][1] += i[1]
+            if x[j].index == i.index:
+                x[j].coe += i.coe
             else:
                 x.append(i)
                 j += 1
 
-        self.factor = []
+        self.factor = filter(lambda i:i.coe != 0, x)
 
-        for i in x:
-            if i[1] != 0:
-                self.factor.append(i)
 
     def derivative(self):
         dx = []
         for i in self.factor:
-            dx.append([i[0]-1, i[0]*i[1]])
+            dx.append([i.index-1, i.index*i.coe])
         return Polynomial(dx)
 
 if __name__ == '__main__':
-    x = Polynomial([[2, 3], [3, 7]])
-    y = Polynomial([[1, 2], [2, 4]])
-    print str(x+y)
-    print str(x-y)
-    print str(x*y)
+    x = Polynomial([X(3, 2), X(7, 3)])
+    y = Polynomial([X(2, 1), X(4, 2)])
+    print 'x: ', x
+    print 'y: ', y
+    print '-x: ', Polynomial()-x
+    print 'x + y: ', x+y
+    print 'x - y: ', x-y
+    print 'x * y: ', x*y

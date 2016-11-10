@@ -6,6 +6,7 @@ from lib.encode.Vigenere import Vigenere
 from lib.crypt.RSA import RSA
 from lib.crypt.AES import AES
 from lib.crypt.Rabin import Rabin
+from lib.crypt.polynomial import Polynomial
 
 
 def console_print():

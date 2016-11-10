@@ -1,13 +1,13 @@
 # cryptogram
 
-a cryptogram lib, implemented some simple cryptogram algorithms
+a cryptogram lib, implemented some cryptogram algorithms, some encode methods, and some application of information theory
 
 ---
 
 ### cipher algorithms
 
 * AES
-* Bacon's Cipher
+* Bacon Cipher
 * Caesar Cipher
 * Diffie-Hellman key exchange
 * ElGamal
@@ -44,4 +44,4 @@ a cryptogram lib, implemented some simple cryptogram algorithms
 * Shanon coding
 * Fano coding
 * Huffman coding
-* Markov chain in [Gibberish-Detector-js](https://github.com/LyleMi/Gibberish-Detector-js)
+* Markov chain in this repo: [Gibberish-Detector-js](https://github.com/LyleMi/Gibberish-Detector-js)
