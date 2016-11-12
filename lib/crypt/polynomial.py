@@ -11,21 +11,23 @@ class X:
         return X(-self.coe, self.index)
 
     def __str__(self):
+
+        if self.coe == 0:
+            return ''
+
         coe = self.coe
         index = self.index
 
         if coe > 1:
-            s = ("+"+str(coe)+"x"+['^'+str(index), ''][index == 1])
+            s = "+" + str(coe) 
         elif coe == 1:
-            s = ("+x"+['^'+str(index), ''][index == 1])
+            s = "+"
         elif coe == -1:
-            s = ("-x"+['^'+str(index), ''][index == 1])
-        elif coe == 0:
-            s = ''
+            s = "-"
         else:
-            s = (str(coe)+"x"+['^'+str(index), ''][index == 1])
+            s = str(coe)
 
-        return s
+        return s + 'x' + ['^'+str(index), ''][index == 1]
 
     def __add__(self, other):
         return X(self.coe + other.coe, self.index)
@@ -35,6 +37,7 @@ class X:
 
     def __mul__(self, other):
         return X(self.coe * other.coe, self.index * other.index)
+
 
 class Polynomial:
 
@@ -160,8 +163,7 @@ class Polynomial:
                 x.append(i)
                 j += 1
 
-        self.factor = filter(lambda i:i.coe != 0, x)
-
+        self.factor = filter(lambda i: i.coe != 0, x)
 
     def derivative(self):
         dx = []
@@ -174,7 +176,7 @@ if __name__ == '__main__':
     y = Polynomial([X(2, 1), X(4, 2)])
     print 'x: ', x
     print 'y: ', y
-    print '-x: ', Polynomial()-x
+    print '-x: ', -x
     print 'x + y: ', x+y
     print 'x - y: ', x-y
     print 'x * y: ', x*y
