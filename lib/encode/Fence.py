@@ -1,11 +1,11 @@
-def fence_encrypt(s, t=0):
+def fence_encode(s, t=0):
     '''
-    fence encrypt function
+    fence encode function
     '''
     relist = []
     if not t:
         for t in range(2, len(s)/2+2):
-            relist.append(fence_encrypt(s, t=t))
+            relist.append(fence_encode(s, t=t))
     else:
         re = ['']*t
         for i in range(len(s)/t+1):
@@ -18,14 +18,14 @@ def fence_encrypt(s, t=0):
     return relist
 
 
-def fence_decrypt(s, t=0):
+def fence_decode(s, t=0):
     '''
-    fence decrypt function
+    fence decode function
     '''
     ret = []
     if not t:
         for t in range(2, len(s)/2+1):
-            ret.append(fence_decrypt(s, t=t))
+            ret.append(fence_decode(s, t=t))
     else:
         re = ''
         for i in range(len(s)/t):
@@ -38,5 +38,5 @@ if __name__ == '__main__':
     TESTCASE = "}~144_0t_em0c14w{galf"
     s = TESTCASE
     for i in range(2, len(s)/2+2):
-        x = fence_encrypt(s,t=i)
-        print x,fence_decrypt(x,t=i)
+        x = fence_encode(s,t=i)
+        print x,fence_decode(x,t=i)

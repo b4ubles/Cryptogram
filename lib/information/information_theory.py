@@ -72,11 +72,8 @@ def reFano(p, ret):
 
 
 def main():
-    # print Shanon([0.05, 0.25, 0.10, 0.15, 0.20, 0.25])
-    # print dec_to_bin(0.5, 3.0)
+    print Shanon([0.05, 0.25, 0.10, 0.15, 0.20, 0.25])
     print Fano([0.01, 0.1, 0.15, 0.17, 0.18, 0.19, 0.2])
-    while False:
-        print entropy(input())
 
 if __name__ == '__main__':
     main()
