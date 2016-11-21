@@ -4,8 +4,8 @@ from cryptography import euler
 class X:
 
     def __init__(self, coe, index):
-        self.index = index
         self.coe = coe
+        self.index = index
 
     def __neg__(self):
         return X(-self.coe, self.index)
@@ -18,8 +18,13 @@ class X:
         coe = self.coe
         index = self.index
 
+        if index == 0:
+            if coe > 0:
+                return '+' + str(coe)
+            else:
+                return str(coe)
         if coe > 1:
-            s = "+" + str(coe) 
+            s = "+" + str(coe)
         elif coe == 1:
             s = "+"
         elif coe == -1:
@@ -36,7 +41,7 @@ class X:
         return X(self.coe - other.coe, self.index)
 
     def __mul__(self, other):
-        return X(self.coe * other.coe, self.index * other.index)
+        return X(self.coe * other.coe, self.index + other.index)
 
 
 class Polynomial:
@@ -51,7 +56,7 @@ class Polynomial:
     '''
 
     def __init__(self, factor=[X(0, 0)]):
-        self.factor = sorted(factor, cmp=lambda x, y: x.index < y.index)
+        self.factor = sorted(factor, cmp=lambda x, y: x.index - y.index)
 
     def __add__(self, other):
         add = []
@@ -171,7 +176,9 @@ class Polynomial:
             dx.append([i.index-1, i.index*i.coe])
         return Polynomial(dx)
 
-if __name__ == '__main__':
+
+def test():
+    # test case 1
     x = Polynomial([X(3, 2), X(7, 3)])
     y = Polynomial([X(2, 1), X(4, 2)])
     print 'x: ', x
@@ -180,3 +187,14 @@ if __name__ == '__main__':
     print 'x + y: ', x+y
     print 'x - y: ', x-y
     print 'x * y: ', x*y
+
+    # test case 2
+    x = Polynomial([X(1, 6), X(1, 4), X(1, 3), X(1, 1), X(1, 0)])
+    y = Polynomial([X(1, 7), X(1, 5), X(1, 2), X(1, 1), X(1, 0)])
+    print 'x: ', x
+    print 'y: ', y
+    print 'x + y: ', x+y
+    print 'x * y: ', x*y
+
+if __name__ == '__main__':
+    test()
