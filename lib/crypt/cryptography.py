@@ -467,6 +467,7 @@ def primitiveRoot(x):
 
     return 0
 
+
 def primitiveRootRand4Prime(p):
     '''
     return a rand primitive root of prime p
@@ -576,6 +577,17 @@ def Solovay_Stassem(n, t=64):
             return False
 
     return True
+
+
+def substitution(x, r):
+    '''
+    x : seq to replace
+    r : replace table
+    '''
+    r = map(lambda i: i-1, r)
+    for i in range(len(r) - 1):
+        x[r[i]], x[r[i+1]] = x[r[i+1]], x[r[i]]
+    return x
 
 if __name__ == '__main__':
     pass
