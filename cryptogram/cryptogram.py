@@ -1,14 +1,14 @@
-from lib.encode.Bacon import Bacon
-from lib.encode.Caesar import caesar
-from lib.encode.Morse import morse_encode, morse_decode
-from lib.encode.Fence import fence_encode, fence_decode
-from lib.encode.Vigenere import Vigenere
-from lib.crypt.RSA import RSA
-from lib.crypt.AES import AES
-from lib.crypt.Rabin import Rabin
-from lib.crypt.polynomial import Polynomial
-from lib.information.Huffman import Huffman
-from lib.information.information_theory import entropy, Shanon, Fano
+from encode.Bacon import Bacon
+from encode.Caesar import caesar
+from encode.Morse import morse_encode, morse_decode
+from encode.Fence import fence_encode, fence_decode
+from encode.Vigenere import Vigenere
+from crypt.RSA import RSA
+from crypt.AES import AES
+from crypt.Rabin import Rabin
+from crypt.polynomial import Polynomial
+from information.Huffman import Huffman
+from information.information_theory import entropy, Shanon, Fano
 
 
 def console_print():

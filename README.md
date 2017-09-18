@@ -1,10 +1,8 @@
-# cryptogram
+# Cryptogram
 
-a cryptogram lib, implemented some cryptogram algorithms, some encode methods, and some application of information theory
+a simple cryptogram lib used to practice, implemented some cryptogram algorithms, some encode functions, and some application of information theory
 
----
-
-### cipher algorithms
+### Cipher Algorithms
 
 * AES
 * Bacon Cipher
@@ -18,9 +16,7 @@ a cryptogram lib, implemented some cryptogram algorithms, some encode methods, a
 * The Rail-Fence Cipher
 * Vigenere Cipher
 
----
-
-### number theory
+### Number Theory
 
 * chinese remainder theorem
 * congruence calc
@@ -37,9 +33,7 @@ a cryptogram lib, implemented some cryptogram algorithms, some encode methods, a
 * primitive root calc
 * Solovay Stassem primality testing
 
----
-
-### information theory
+### Information Theory
 
 * Shanon coding
 * Fano coding
