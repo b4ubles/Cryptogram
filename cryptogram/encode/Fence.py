@@ -1,11 +1,14 @@
-def fence_encode(s, t=0):
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+def fenceEncode(s, t=0):
     '''
     fence encode function
     '''
     relist = []
     if not t:
         for t in range(2, len(s)/2+2):
-            relist.append(fence_encode(s, t=t))
+            relist.append(fenceEncode(s, t=t))
     else:
         re = ['']*t
         for i in range(len(s)/t+1):
@@ -18,14 +21,14 @@ def fence_encode(s, t=0):
     return relist
 
 
-def fence_decode(s, t=0):
+def fenceDecode(s, t=0):
     '''
     fence decode function
     '''
     ret = []
     if not t:
         for t in range(2, len(s)/2+1):
-            ret.append(fence_decode(s, t=t))
+            ret.append(fenceDecode(s, t=t))
     else:
         re = ''
         for i in range(len(s)/t):
@@ -38,5 +41,5 @@ if __name__ == '__main__':
     TESTCASE = "}~144_0t_em0c14w{galf"
     s = TESTCASE
     for i in range(2, len(s)/2+2):
-        x = fence_encode(s,t=i)
-        print x,fence_decode(x,t=i)
+        x = fenceEncode(s,t=i)
+        print x,fenceDecode(x,t=i)

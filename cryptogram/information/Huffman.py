@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 class BTreeNode:
 
     def __init__(self, right=None, left=None, parent=None,

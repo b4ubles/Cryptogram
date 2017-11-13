@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from cryptography import *
-from cry_test import TESTCASE
+from crytest import TESTCASE
 
 
 class Rabin():
@@ -24,7 +27,7 @@ class Rabin():
             p = randint(a, b)
             if p % 4 != 3:
                 continue
-            if Miller_Rabin(p):
+            if MillerRabin(p):
                 break
 
         while True:
@@ -32,7 +35,7 @@ class Rabin():
             q = randint(a, b)
             if q % 4 != 3 or q == p:
                 continue
-            if Miller_Rabin(q):
+            if MillerRabin(q):
                 break
 
         return p, q

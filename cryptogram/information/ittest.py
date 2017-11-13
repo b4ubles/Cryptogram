@@ -1,9 +1,8 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @author Lyle
-# version 6-14
 
 import unittest
-from information_theory import *
+from information import *
 from Huffman import *
 
 

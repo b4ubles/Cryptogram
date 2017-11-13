@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from random import randint
 
 from cryptography import *
-from cry_test import TESTCASE
+from crytest import TESTCASE
 
 
 class ElGamal(object):

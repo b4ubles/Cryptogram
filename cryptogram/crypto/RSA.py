@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from cryptography import *
-from cry_test import TESTCASE
+from crytest import TESTCASE
 
 
 class RSA():

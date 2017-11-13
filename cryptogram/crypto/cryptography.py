@@ -1,11 +1,7 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 '''
-
-@author Lyle
-version 6-15
-
-this is my cryptography toolkit
-
 todo:
     need check boundary conditions
     some function need simplify
@@ -56,7 +52,14 @@ def congruence(a, b, m):
 
 
 def crt(b, m):
-    '''chinese remainder theorem'''
+    '''
+    chinese remainder theorem
+    x % m0 == b0
+    x % m1 == b1
+    @param list b [b0, b1]
+    @param list m [m0, m1]
+    return x
+    '''
     product = 1
     for i in m:
         product *= i
@@ -226,7 +229,7 @@ def generatePrime(a, b):
     '''
     while True:
         p = randint(a, b)
-        if Miller_Rabin(p):
+        if MillerRabin(p):
             return p
 
 
@@ -317,9 +320,9 @@ def mrsm(b, n, m):
     return a
 
 
-def Miller_Rabin(n, t=64):
+def MillerRabin(n, t=64):
     '''
-    Miller_Rabin prime judge
+    MillerRabin prime judge
     t is security factor
     '''
     if n < 1000:
@@ -409,7 +412,7 @@ def isPrime(n):
             return False
 
     if n > 0x8000:
-        return Miller_Rabin(n)
+        return MillerRabin(n)
 
     # 101 because max(smallprime) < 101
     i = 101
@@ -512,7 +515,7 @@ def primeFactor(x, dinstinct=False):
     return sorted(list(set(factor))) if dinstinct else factor
 
 
-def reduced_residues(n):
+def reducedResidues(n):
     # return reduced residues system
     return filter(lambda i: gcd(i, n) == 1, range(1, n))
 
@@ -547,7 +550,6 @@ def squareRootModp4(a, p):
     calc x which satisfy x^2 % p = a
     need p % 4 = 3
     '''
-
     if p % 4 != 3 or not isPrime(p):
         raise ValueError("could only cal root of prime which mod 4 = 3")
 
@@ -558,7 +560,7 @@ def squareRootModp4(a, p):
     return x
 
 
-def Solovay_Stassem(n, t=64):
+def SolovayStassem(n, t=64):
     '''
     Solovay Stassem prime number check
     t is security number

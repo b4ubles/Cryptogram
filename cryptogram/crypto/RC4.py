@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # refer: https://en.wikipedia.org/wiki/RC4
 
-from cry_test import TESTCASE
+from crytest import TESTCASE
 
 
 class RC4:

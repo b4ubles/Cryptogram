@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 def Bacon(x, type=0, C=5, t='AB'):
     '''
     bacon decrypt

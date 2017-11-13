@@ -1,5 +1,8 @@
-from cry_test import TESTCASE
-from AES_SBOX import s_box, inv_sbox
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from crytest import TESTCASE
+from AESSBOX import sBox, invSbox
 
 
 # mode refer to 128bits, 192bits, 256bits
@@ -80,11 +83,11 @@ def add_round_key(state, w, r):
 
 
 def sub_bytes(s):
-    return map(lambda i: s_box[i], s)
+    return map(lambda i: sBox[i], s)
 
 
 def inv_sub_bytes(s):
-    return map(lambda i: inv_sbox[i], s)
+    return map(lambda i: invSbox[i], s)
 
 
 def shift_rows(state):

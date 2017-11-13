@@ -1,11 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from random import randint
-from DES_Constant import *
+from DESConstant import *
 
-def gen_key():
-    return [odd_check(randint(0, 127)) for i in range(8)]
+def genKey():
+    return [oddCheck(randint(0, 127)) for i in range(8)]
 
 
-def odd_check(x):
+def oddCheck(x):
     # check a number and make it has odd 1 in bit form
     count = 1
     t = x
@@ -22,9 +25,9 @@ def repalce(raw, table):
     return t
 
 def main():
-    # print map(bin,gen_key())
+    # print map(bin,genKey())
     # print repalce(range(64), IP)
-    print len(repalce(gen_key(), PC1_C))
+    print len(repalce(genKey(), PC1_C))
 
 if __name__ == '__main__':
     main()

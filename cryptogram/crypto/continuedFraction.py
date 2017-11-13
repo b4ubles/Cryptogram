@@ -1,14 +1,13 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @author Lyle
-# version 5-19
 
 from decimal import *
 
 
-def continued_fraction(x):
+def continuedFraction(x):
     '''
-    calc continued_fraction approximate
-    generate a continued_fraction list
+    calc continuedFraction approximate
+    generate a continuedFraction list
     '''
     a = []
     a.append(int(x))
@@ -19,7 +18,7 @@ def continued_fraction(x):
     return a
 
 
-def calc_continued_fraction(x):
+def calcContinuedFraction(x):
     '''
     use continued fraction list 
     calc continued fraction approximate
@@ -30,7 +29,7 @@ def calc_continued_fraction(x):
     return 1/a
 
 
-def rational_continued_fraction(x, y):
+def rationalContinuedFraction(x, y):
     '''
     calc rational fraction's continued fraction approximate
     '''
@@ -50,10 +49,10 @@ if __name__ == '__main__':
     '''
     getcontext().prec = 100
     while True:
-        x = continued_fraction(Decimal(input()))
+        x = continuedFraction(Decimal(input()))
         print x
-        print calc_continued_fraction(x)
+        print calcContinuedFraction(x)
     '''
     while True:
         x, y = map(int, raw_input().split())
-        rational_continued_fraction(x, y)
+        rationalContinuedFraction(x, y)

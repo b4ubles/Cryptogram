@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from string import maketrans
 from string import lowercase
 from string import uppercase

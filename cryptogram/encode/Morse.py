@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from string import upper
 from string import uppercase
 
@@ -25,13 +28,13 @@ DDICT = {'---': 'O', '--.': 'G', '-...': 'B', '-..-': 'X',
          '-....-': ' '}
 
 
-def morse_decode(x):
+def morseDecode(x):
     return ''.join(map(lambda i: DDICT[i], x.split()))
 
 
-def morse_encode(x):
+def morseEncode(x):
     return ' '.join(map(lambda i: EDICT[i], list(filter(lambda i: i in uppercase, upper(x)))))
 
 if __name__ == '__main__':
-    print morse_encode('this is a test')
-    print morse_decode('.. .-.. --- ...- . -.-- --- ..-')
+    print morseEncode('this is a test')
+    print morseDecode('.. .-.. --- ...- . -.-- --- ..-')

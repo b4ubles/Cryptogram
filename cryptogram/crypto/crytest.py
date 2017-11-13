@@ -1,6 +1,5 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @author Lyle
-# version 6-14
 
 import unittest
 from cryptography import *
@@ -51,9 +50,9 @@ class CryptTest(unittest.TestCase):
         self.assertEqual(mrsm(163, 237, 667), 501)
 
     def test_ordam(self):
-        self.assertEqual(ordam(4,7), 3)
-        self.assertEqual(ordam(9,14), 3)
-        self.assertEqual(ordam(8,15), 4)
+        self.assertEqual(ordam(4, 7), 3)
+        self.assertEqual(ordam(9, 14), 3)
+        self.assertEqual(ordam(8, 15), 4)
 
     def test_primeFactor(self):
         self.assertEqual(set(primeFactor(293891, True)), set([13, 37, 47]))
