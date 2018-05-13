@@ -1,18 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 def Bacon(x, type=0, C=5, t='AB'):
+    '''bacon decrypt
+
+    Args:
+        x (str): str
+        type (int, optional): different of bacon encrypt
+        C (int, optional): could be 5, 7, 8 in according to encode
+        t (str, optional): different types of encode
+
+    Returns:
+        str: decode str list
     '''
-    bacon decrypt
-    type means different of bacon encrypt
-    c means different types of encode
-    C could be 5, 7, 8 in different condition
-    '''
-    
+
     from string import maketrans
     from string import lowercase
     from string import uppercase
-
 
     l = ''
     m = ''
@@ -48,4 +53,4 @@ def Bacon(x, type=0, C=5, t='AB'):
 if __name__ == '__main__':
     TESTCASE = "DEath IS JUST A PaRT oF lIFE,"
     TESTCASE += "sOMeTHInG wE'RE aLL dESTInED TO dO"
-    print Bacon(TESTCASE)
+    print(Bacon(TESTCASE))

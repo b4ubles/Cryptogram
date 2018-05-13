@@ -9,8 +9,7 @@ u = uppercase
 
 
 def caesar(s, shift=0):
-    '''
-    caesar code
+    '''caesar code
     if shift = 0, try every shift here
     '''
     if shift == 0:
@@ -22,6 +21,7 @@ def caesar(s, shift=0):
 
 def trans(s, t):
     return s.translate(maketrans(l + u, l[t:]+l[:t] + u[t:]+u[:t]))
+
 
 if __name__ == '__main__':
     s = "oA"

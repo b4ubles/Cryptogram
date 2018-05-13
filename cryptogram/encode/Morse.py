@@ -35,6 +35,7 @@ def morseDecode(x):
 def morseEncode(x):
     return ' '.join(map(lambda i: EDICT[i], list(filter(lambda i: i in uppercase, upper(x)))))
 
+
 if __name__ == '__main__':
     print morseEncode('this is a test')
     print morseDecode('.. .-.. --- ...- . -.-- --- ..-')

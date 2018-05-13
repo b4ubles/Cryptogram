@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 def Vigenere(m, key, d=''):
-    '''
-    m:message
-    key:Vigenere encrypt key,should be list 
-    d:replace dict
+    '''Vigenere
+    
+    Args:
+        m (str): message
+        key (str): Vigenere encrypt key, should be list 
+        d (str, optional): replace dict
+    
+    Returns:
+        str: encode text
     '''
     if d == '':
         d = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -23,6 +29,7 @@ def Vigenere(m, key, d=''):
         for j in xrange(len(kindex)):
             kindex[j] = (kindex[j]+1) % klen[j]
     return re
+
 
 if __name__ == '__main__':
     x = 'xpfzxkaqfcrnxlivykaiiy'
